@@ -1,5 +1,5 @@
 import unittest
-from main import BBox
+from Code.main import BBox
 class Test_Bbox_gr(unittest.TestCase):
     first_bbox = BBox({"x0":10, "y0" : 10 , "x1" : 40, "y1" : 20})
     second_bbox = BBox({"x0":50, "y0" : 10 , "x1" : 110, "y1" : 20})
