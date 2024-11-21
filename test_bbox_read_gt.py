@@ -6,7 +6,7 @@ class Test_Bbox_gr(unittest.TestCase):
     third_bbox = BBox({"x0":10, "y0" : 30 , "x1" : 60, "y1" : 40})
     fourth_bbox = BBox({"x0":70, "y0": 30, "x1" : 110, "y1" : 40})
 
-    def test_size(self) -> None:
+    def test_order(self) -> None:
         self.assertEqual(self.first_bbox > self.third_bbox,False)
         self.assertEqual(self.second_bbox > self.first_bbox,True)
         self.assertEqual(self.fourth_bbox > self.third_bbox,True)
