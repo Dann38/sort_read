@@ -5,7 +5,7 @@ from tesseract_reader import ImageReader, TesseractReader, TesseractReaderConfig
 if __name__ == '__main__':
     # Image path /example_img/img_1.jpeg
     path_project = os.path.abspath(os.path.join(os.getcwd(), "."))
-    path_img = os.path.join(path_project, 'testing_imgs', "test_image2.jpeg")
+    path_img = os.path.join(path_project, 'testing_imgs', "test_image1.jpeg")
 
     # Objects
     image_reader = ImageReader()
@@ -14,5 +14,8 @@ if __name__ == '__main__':
 
     img = image_reader.read(path_img)
     readed_img = tesseract_reader.read(img)
-    print(Bbox_sorter.sort_bboxes(readed_img=readed_img))
+    
+    rez = Bbox_sorter.sort_bboxes(readed_img=readed_img)
+    for r in rez:
+        print(readed_img[1][r])
 

@@ -42,8 +42,16 @@ class BBox(Serializable):
         return "BBox(x = {} y = {}, w = {}, h = {})".format(self.x_top_left, self.y_top_left, self.width, self.height)
 
     def __gt__(self, bbox: 'BBox'):
-        eps = max(self.y_top_left - self.y_bottom_right, bbox.y_top_left - bbox.y_bottom_right)
-        if self.y_top_left > bbox.y_top_left + eps:
+        eps = max(self.y_bottom_right - self.y_top_left, bbox.y_bottom_right - bbox.y_top_left)
+        if self.y_top_left> bbox.y_top_left + eps:
+            return True
+        elif abs(bbox.y_top_left - self.y_top_left) < eps and self.x_top_left > bbox.x_top_left:
+            return True
+        return False
+    
+    def __lt__(self, bbox: 'BBox'):
+        eps = max(self.y_bottom_right - self.y_top_left, bbox.y_bottom_right - bbox.y_top_left)
+        if self.y_top_left  + eps < bbox.y_top_left:
             return True
         elif abs(bbox.y_top_left - self.y_top_left) < eps and bbox.x_top_left > self.x_top_left:
             return True

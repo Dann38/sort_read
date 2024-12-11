@@ -8,8 +8,8 @@ class test_reading_order_sort(unittest.TestCase):
     
     
     def test_order(self):
-        filenames = [ "test_image1.jpeg",  "test_image2.jpeg"]
-        results = [[0,1,2], [0,1,2,3]]
+        filenames = [ "test_image1.jpeg",  "test_image2.jpeg", "test_image3.jpeg", "test_image4.jpeg"]
+        results = [["Привет!!", "Меня", "КУда"], ["Первый", "Второй", "Третий", "Четвертьй"], ["Слово!", "Слово3", "Слово2"], ["Слово2", "Слово!", "Слово3"]]
 
         image_reader = ImageReader()
         tesseract_config = TesseractReaderConfig()
@@ -21,6 +21,9 @@ class test_reading_order_sort(unittest.TestCase):
             img = image_reader.read(path_img)
             readed_img = tesseract_reader.read(img)
             current_result = Bbox_sorter.sort_bboxes(readed_img=readed_img)
-            print(f'test{i}')
-            self.assertEqual(current_result, results[i])
+            cur = []
+            for index in current_result:
+                cur.append(readed_img[1][index])
+                
+            self.assertEqual(cur, results[i])
         
