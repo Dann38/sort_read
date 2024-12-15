@@ -22,20 +22,14 @@ class test_reading_order_sort(unittest.TestCase):
         path_project = os.path.abspath(os.path.join(os.getcwd(), "."))
         
         for i in range(len(filenames)):
-            print(f'картинка номер {i+1}')
             path_img = os.path.join(path_project, 'testing_imgs', filenames[i])
             img = image_reader.read(path_img)
             readed_img = tesseract_reader.read(img)
             for j in range(len(readed_img[0])):
                 readed_img[0][j] = newBbox.converter(readed_img[0][j])
-                print(readed_img[0][j])
             current_result = Bbox_sorter.sort_bboxes(readed_img=readed_img)
-            print(current_result)
             
                 
             for index, result in zip([_ for _ in range(len(current_result))], current_result):
-                print(i, index)
-                print(readed_img[0][result])
-                print(expected_points_in_right_order[i][index])
                 self.assertTrue(readed_img[0][result].point_is_in_bbox(expected_points_in_right_order[i][index]))
         

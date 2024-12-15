@@ -35,8 +35,6 @@ class newBbox(BBox):
     def point_is_in_bbox(self, point : list) -> bool:
         x = point[0]
         y = point[1]
-        print(x)
-        print(y)
         
         return (x > self.x_top_left and x < self.x_bottom_right and y > self.y_top_left and y < self.y_bottom_right)
         
