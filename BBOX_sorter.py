@@ -1,4 +1,4 @@
-from newBbox import newBbox
+from SortableBBox import SortableBBox
 import copy
 class Bbox_sorter:
     
@@ -9,7 +9,7 @@ class Bbox_sorter:
         new_new_image = copy.deepcopy(new_image)
         bboxes = new_new_image[0]
         for i in range(len(bboxes)):
-            bboxes[i] = newBbox.converter(bboxes[i])
+            bboxes[i] = SortableBBox.converter(bboxes[i])
             bboxes[i].index = i
 
         for i in range(len(bboxes)):
