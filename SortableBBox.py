@@ -49,7 +49,7 @@ class SortableBBox(BBox):
         if cos1 < 0 and cos2 < 0:
             return (BBox.x_top_left + BBox.width/2) < (self.x_top_left + self.width/2)
         else:
-            return False # ответ на вопрос больше будет отрицателен, не сравнимы
+            return None # ответ на вопрос больше будет отрицателен, не сравнимы
         
         
     def greater_then_vertical(self, BBox: 'BBox'):
@@ -67,9 +67,9 @@ class SortableBBox(BBox):
         cos2 = self.__get_min_cos(l2, r2, c1)
 
         if cos1 < 0 and cos2 < 0:
-            return (BBox.y_top_left + BBox.height/2) < self.y_top_left + self.height/2
+            return (BBox.y_top_left + BBox.height/2) < (self.y_top_left + self.height/2)
         else:
-            return False
+            return None
     
     def __gt__(self, bbox: 'BBox'):
         eps = max(self.y_bottom_right - self.y_top_left, bbox.y_bottom_right - bbox.y_top_left)

@@ -11,18 +11,18 @@ class Bbox_sorter:
         for i in range(len(bboxes)):
             bboxes[i] = SortableBBox.converter(bboxes[i])
             bboxes[i].index = i
-
+        
         for i in range(len(bboxes)):
-            for j in range(i, len(bboxes)):
-                if bboxes[j].greater_then_horizont(bboxes[i]):
+            for j in range(len(bboxes)):
+                if bboxes[j].greater_then_vertical(bboxes[i]):
                     bboxes[i], bboxes[j] = bboxes[j], bboxes[i]
-                elif bboxes[j].greater_then_vertical(bboxes[i]):
+                elif bboxes[j].greater_then_vertical(bboxes[i]) is None and bboxes[j].greater_then_horizont(bboxes[i]):
                     bboxes[i], bboxes[j] = bboxes[j], bboxes[i]
                     
         result = []
         for i in range(len(bboxes)):
             result.append(bboxes[i].index)
-        return result[::-1]
+        return result
     
     
     @staticmethod
