@@ -1,0 +1,10 @@
+{"words": [
+    {"x_top_left": 1, "x_bottom_right": 85, "y_top_left": 60, "y_bottom_right": 65, "text": "4"},
+    {"x_top_left": 50, "x_bottom_right": 95, "y_top_left": 20, "y_bottom_right": 58, "text": "3"},
+    
+    {"x_top_left": 1, "x_bottom_right": 45, "y_top_left": 20, "y_bottom_right": 39, "text": "1"},
+    {"x_top_left": 10, "x_bottom_right": 45, "y_top_left": 40, "y_bottom_right": 59, "text": "2"},
+    
+    {"x_top_left": 1, "x_bottom_right": 95, "y_top_left": 1, "y_bottom_right": 15, "text": "0"}
+    
+]}

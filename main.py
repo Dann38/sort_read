@@ -43,7 +43,7 @@ if __name__ == '__main__':
     #     bboxes.append(readed_img[0][i])
 
     new_bboxes = []
-    with open('boxes.json', 'r') as file:
+    with open('boxes3.json', 'r') as file:
         boxes = json.load(file)
         boxes = boxes['words']
         
@@ -65,6 +65,7 @@ if __name__ == '__main__':
     
     for i in sorted_boxes:
         print(text[i])
+    Drawer.draw_bbox([new_bboxes[i] for i in sorted_boxes], text=[f"{j}/{text[i]}" for j, i in enumerate(sorted_boxes)])
     # points = []
     # for r in rez:
     #     print(readed_img[0][r])
