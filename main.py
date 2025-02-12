@@ -43,7 +43,7 @@ if __name__ == '__main__':
     #     bboxes.append(readed_img[0][i])
 
     new_bboxes = []
-    with open('boxes3.json', 'r') as file:
+    with open('boxes4.json', 'r') as file:
         boxes = json.load(file)
         boxes = boxes['words']
         
