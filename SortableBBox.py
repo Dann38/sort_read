@@ -21,78 +21,55 @@ class SortableBBox(BBox):
         eps = max(self.y_bottom_right - self.y_top_left, bbox.y_bottom_right - bbox.y_top_left)
         return eps
     
-    def greater_then_horizont(self, BBox: 'BBox'):
+    def __get_dist(self, l, r, c):
+        A = math.sqrt((l[0] - r[0])**2 + (l[1] - r[1])**2)
+        B = math.sqrt((l[0] - c[0])**2 + (l[1] - c[1])**2)
+        C = math.sqrt((c[0] - r[0])**2 + (c[1] - r[1])**2)
+        return A, B, C
         
-        l1, c1, r1 = (self.x_top_left, self.y_top_left), \
-            (abs(self.x_top_left - self.x_bottom_right)/2, self.y_top_left), \
-            (self.x_bottom_right, self.y_top_left)
+    def __get_min_cos(self, l, r, c):
+        A, B, C = self.__get_dist(l, r, c)
+        return min([(B**2+C**2-A**2)/(2*B*C), (A**2+C**2-B**2)/(2*A*C), (B**2+A**2-C**2)/(2*B*A)])
             
-        l2, c2, r2 = (BBox.x_top_left, BBox.y_top_left), \
-            (abs(BBox.x_top_left - BBox.x_bottom_right)/2,BBox.y_top_left), \
-            (BBox.x_bottom_right, BBox.y_top_left)
+
+    def greater_then_horizont(self, BBox: 'BBox'):
+        w1 = abs(self.x_top_left - self.x_bottom_right)
+        w2 = abs(BBox.x_top_left - BBox.x_bottom_right)
+        l1, c1, r1 = (self.x_top_left,      self.y_top_left), \
+                     (self.x_top_left+w1/2, self.y_top_left), \
+                     (self.x_bottom_right,  self.y_top_left)
         
+        l2, c2, r2 = (BBox.x_top_left,      BBox.y_top_left), \
+                     (BBox.x_top_left+w2/2, BBox.y_top_left), \
+                     (BBox.x_bottom_right,  BBox.y_top_left)
+       
+        cos1 = self.__get_min_cos(l1, r1, c2)
+        cos2 = self.__get_min_cos(l2, r2, c1)
         
-        
-        A1 = abs(l1[0] - r1[0])
-        B1 = math.sqrt((l1[0] - c2[0])**2 + (l1[1] - c2[1])**2)
-        C1 = math.sqrt((c2[0] - r1[0])**2 + (c2[1] - r1[1])**2)
-        
-        A2 = abs(r2[0] - l2[0])
-        B2 = math.sqrt((l2[0] - c1[0])**2 +  (l2[1] - c1[1])**2)
-        C2 = math.sqrt((c1[0] - r2[0])**2 + (c1[1] - r2[1])**2)
-        
-        cos1 = [(B1**2+C1**2-A1**2)/(2*B1*C1), (A1**2+C1**2-B1**2)/(2*A1*C1) , (B1**2+A1**2-C1**2)/(2*B1*A1)]
-        
-        cos2 = [(B2**2+C2**2-A2**2)/(2*B2*C2), (A2**2+C2**2-B2**2)/(2*A2*C2), (B2**2+A2**2-C2**2)/(2*B2*A2)]
-        counter = 0
-        for cos in cos1: 
-            if cos < 0:
-                counter += 1
-        for cos in cos2:
-            if cos < 0:
-                counter += 1
-        
-        if counter == 2:
+        if cos1 < 0 and cos2 < 0:
             return (BBox.x_top_left + BBox.width/2) < (self.x_top_left + self.width/2)
         else:
-            return None
+            return False # ответ на вопрос больше будет отрицателен, не сравнимы
         
         
     def greater_then_vertical(self, BBox: 'BBox'):
-        
+        h1 = abs(self.y_top_left - self.y_bottom_right)
+        h2 = abs(BBox.y_top_left - BBox.y_bottom_right)
         l1, c1, r1 = (self.x_top_left, self.y_top_left), \
-            ( self.x_top_left, self.y_top_left + self.height/2), \
-            (self.x_top_left, self.y_bottom_right)
+                     (self.x_top_left, self.y_top_left + h1/2), \
+                     (self.x_top_left, self.y_bottom_right)
             
         l2, c2, r2 = (BBox.x_top_left, BBox.y_top_left), \
-            ( BBox.x_top_left, abs(BBox.y_top_left - BBox.y_bottom_right)/2), \
-            (BBox.x_top_left, BBox.y_bottom_right)
+                     (BBox.x_top_left, BBox.y_top_left + h2/2), \
+                     (BBox.x_top_left, BBox.y_bottom_right)
             
-        
-        A1 = abs(l1[1] - r1[1])
-        B1 = math.sqrt((l1[0] - c2[0])**2 + (l1[1] - c2[1])**2)
-        C1 = math.sqrt((c2[0] - r1[0])**2 + (c2[1] - r1[1])**2)
-        
-        A2 = abs(r2[1] - l2[1])
-        B2 = math.sqrt((l2[0] - c1[0])**2 +  (l2[1] - c1[1])**2)
-        C2 = math.sqrt((c1[0] - r2[0])**2 + (c1[1] - r2[1])**2)
-        
-        
-        cos1 = [(B1**2+C1**2-A1**2)/(2*B1*C1), (A1**2+C1**2-B1**2)/(2*A1*C1) , (B1**2+A1**2-C1**2)/(2*B1*A1)]
-        
-        cos2 = [(B2**2+C2**2-A2**2)/(2*B2*C2), (A2**2+C2**2-B2**2)/(2*A2*C2), (B2**2+A2**2-C2**2)/(2*B2*A2)]
-        counter = 0
-        for cos in cos1: 
-            if cos < 0:
-                counter += 1
-        for cos in cos2:
-            if cos < 0:
-                counter += 1
-        
-        if counter == 2:
+        cos1 = self.__get_min_cos(l1, r1, c2)
+        cos2 = self.__get_min_cos(l2, r2, c1)
+
+        if cos1 < 0 and cos2 < 0:
             return (BBox.y_top_left + BBox.height/2) < self.y_top_left + self.height/2
         else:
-            return None
+            return False
     
     def __gt__(self, bbox: 'BBox'):
         eps = max(self.y_bottom_right - self.y_top_left, bbox.y_bottom_right - bbox.y_top_left)
