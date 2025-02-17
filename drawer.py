@@ -43,7 +43,6 @@ class Drawer():
         x_bottom +=10
         y_bottom += 10
         
-        print(x_bottom, y_bottom)
         image_for_bboxes = np.zeros((y_bottom, x_bottom, 3))
         
         for i in range(len(bboxes)):

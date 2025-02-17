@@ -23,17 +23,17 @@ if __name__ == '__main__':
     text = new_new_image[1]
     new_bboxes = []
     
-    for i in bboxes:
-        new_bboxes.append(SortableBBox.converter(i))
+    # for i in bboxes:
+    #     new_bboxes.append(SortableBBox.converter(i))
         
-    print(new_bboxes)
-    print(text)
-    Drawer.draw_bbox(new_bboxes, text=text)
-    print(new_bboxes[1].greater_then_vertical(new_bboxes[0]))
+    # print(new_bboxes)
+    # print(text)
+    # Drawer.draw_bbox(new_bboxes, text=text)
+    # print(new_bboxes[1].greater_then_vertical(new_bboxes[0]))
     
-    sorted_boxes = Bbox_sorter.sort_bboxes_using_triangles(new_bboxes)
-    for i in sorted_boxes:
-        print(text[i])
+    # sorted_boxes = Bbox_sorter.sort_bboxes_using_triangles(new_bboxes)
+    # for i in sorted_boxes:
+    #     print(text[i])
         
         
     # bboxes = []
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     #     bboxes.append(readed_img[0][i])
 
     new_bboxes = []
-    with open('boxes4.json', 'r') as file:
+    with open('tests/bboxes/boxes4.json', 'r') as file:
         boxes = json.load(file)
         boxes = boxes['words']
         
@@ -60,8 +60,8 @@ if __name__ == '__main__':
     print(text)
     Drawer.draw_bbox(new_bboxes, text=text)
 
-    print(new_bboxes[2].greater_then_horizont(new_bboxes[0]))
     sorted_boxes = Bbox_sorter.sort_bboxes_using_triangles(new_bboxes)
+    print(sorted_boxes)
     
     for i in sorted_boxes:
         print(text[i])

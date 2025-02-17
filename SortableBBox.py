@@ -1,6 +1,8 @@
 
 from tesseract_reader.bbox.bbox import BBox
 import math
+import json
+
 class SortableBBox(BBox):
     
     def __init__(self, x_top_left: int, y_top_left: int, width: int, height: int) -> None:
@@ -15,6 +17,24 @@ class SortableBBox(BBox):
         h = bbox.height
         
         return SortableBBox(x, y, w, h)
+        
+        
+    @staticmethod 
+    def json_converter(filename):
+        with open(filename, 'r') as file:
+            boxes = json.load(file)
+            boxes = boxes['words']
+        text = []
+        new_bboxes = []
+        for i in range(len(boxes)):
+            x_top_left = boxes[i]['x_top_left']
+            y_top_left = boxes[i]['y_top_left']
+            w = -(boxes[i]['x_top_left'] - boxes[i]['x_bottom_right'])
+            h = -(boxes[i]['y_top_left'] - boxes[i]['y_bottom_right'])
+            new_bboxes.append(SortableBBox(x_top_left, y_top_left, w, h))
+            text.append(boxes[i]['text'])
+            
+        return new_bboxes, text
         
     @property
     def eps(self, bbox):
